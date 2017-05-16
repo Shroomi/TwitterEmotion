@@ -1,5 +1,6 @@
 import re, string
- 
+
+#the regular expression of emoji
 emoticons_str = r"""
     (?:
         [:=;] # Eyes
@@ -7,7 +8,8 @@ emoticons_str = r"""
         [D\)\]\(\]/\\OpP] # Mouth
     )"""
 
-#the regular expression of HTMLtags, @personName, URLs, numbers and 'NEWLINE'
+#the regular expression of HTMLtags, @personName, URLs, numbers and 'NEWLINE' 
+#which need to be deleted
 regex_substr = [
         r'<[^>]+>', # HTML tags
         r'(?:@[\w_]+)', # @personName
@@ -15,7 +17,8 @@ regex_substr = [
         r'(?:(?:\d+,?)+(?:\.?\d+)?)', # numbers
         r'NEWLINE' #the special word 'NEWLINE'
         ]
-    
+
+#the regular expression of words and anything else which need to be left   
 regex_str = [
     emoticons_str,
     r"(?:[a-z][a-z'\-_]+[a-z])", # words with - and '
