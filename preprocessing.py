@@ -26,13 +26,16 @@ regex_str = [
 tokens_re = re.compile(r'('+'|'.join(regex_str)+')', re.VERBOSE | re.IGNORECASE)
 del_re = re.compile(r'('+'|'.join(regex_substr)+')', re.VERBOSE | re.IGNORECASE)
 hash_re = re.compile(r'(?:\#+)([\w_]+[\w\'_\-]*[\w_]+)') #Hashtags
-punc_re = re.compile(r'[%s\…]' % re.escape(string.punctuation))
+punc_re = re.compile(r'[%s]' % re.escape(string.punctuation))
+puncn_re = re.compile(r'[！？｡＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀\
+｛｜｝～｟｠｢｣､、〃》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟ … ‧﹏.]')
 emoticon_re = re.compile(r'^'+emoticons_str+'$', re.VERBOSE | re.IGNORECASE)
  
 def tokenize(s):
     s = del_re.sub(r'', s) #delete HTMLtags, @personName, URLs, numbers and 'NEWLINE'
     s = hash_re.sub(r'\1', s) #delete hashtag but leaving the word after hashtag
-    s = punc_re.sub('', s) #delete punctuation
+    s = punc_re.sub(r'', s) #delete english punctuation
+    s = punc_re.sub(r'', s) #delete chinese punctuation
     return tokens_re.findall(s)
  
 def preprocess(s, lowercase=False): #make capital to lowercase except emoji token
